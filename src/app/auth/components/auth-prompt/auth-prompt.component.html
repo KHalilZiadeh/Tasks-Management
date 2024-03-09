@@ -1,0 +1,72 @@
+<div id="box"
+     class="rounded bg-light-purple p-3">
+  <form [formGroup]="authForm"
+        (ngSubmit)="onSubmit()">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text"
+              style="border-top-right-radius: 0; border-bottom-right-radius: 0">@</span>
+      </div>
+      <input type="text"
+             class="form-control"
+             placeholder="username"
+             formControlName="user" />
+    </div>
+    <p *ngIf="USERTAKEN"
+       class="h6 text-danger">Username Already taken</p>
+    <p *ngIf="USEREXIST"
+       class="h6 text-danger">Username doesn't exist</p>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text"
+              style="border-top-right-radius: 0; border-bottom-right-radius: 0">
+          pass
+        </span>
+      </div>
+      <input type="password"
+             class="form-control"
+             placeholder="password"
+             formControlName="pass" />
+      <span class="input-group-text"
+            id="eye">
+        <i *ngIf="!SHOWPASS"
+           class="fa-solid fa-eye"
+           (click)="togglePass($event)"></i>
+        <i *ngIf="SHOWPASS"
+           class="fa-solid fa-eye-slash"
+           (click)="togglePass($event)"></i>
+      </span>
+    </div>
+    <div *ngIf="SHOWCONF"
+         class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text"
+              style="border-top-right-radius: 0; border-bottom-right-radius: 0">
+          passConf
+        </span>
+      </div>
+      <input type="{{ toggleType(SHOWPASS) }}"
+             class="form-control"
+             placeholder="password"
+             formControlName="passCon"
+             (keyup)="
+          onPressValidatePass(
+            authForm.controls['pass'].value,
+            authForm.controls['passCon'].value!
+          )
+        " />
+    </div>
+    <p *ngIf="WRONG"
+       class="h6 text-danger">Wrong password</p>
+    <p *ngIf="NOMATCH"
+       class="h6 text-danger">Passwords doesn't match</p>
+    <div id="log">
+      <button [disabled]="authForm.invalid"
+              type="submit"
+              class="btn btn-light c-purple me-3">
+        {{ page }}
+      </button>
+      <p *ngIf="!SHOWCONF">new? <a [routerLink]="['/signup']">joinus</a></p>
+    </div>
+  </form>
+</div>

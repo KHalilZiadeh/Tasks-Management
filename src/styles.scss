@@ -1,1 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@fortawesome/fontawesome-free/css/all.css";
+
+.c-purple {
+  color: #3A1078;
+}
+
+.c-light-purple {
+  color: #4E31AA
+}
+
+.c-blue {
+  color: #2F58CD;
+}
+
+.c-light-blue {
+  color: #3795BD
+}
+
+.bg-purple {
+  background-color: #3A1078;
+}
+
+.bg-light-purple {
+  background-color: #4E31AA
+}
+
+.bg-blue {
+  background-color: #2F58CD;
+}
+
+.bg-light-blue {
+  background-color: #3795BD
+}
+
+#page-body {
+  width: 100vw;
+  min-height: 100vh;
+
+  img {
+    width: 400px;
+  }
+}

@@ -1,0 +1,21 @@
+#box {
+  width: 300px;
+  padding: 20px;
+
+
+  #log {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    #eye {
+      display: inline-block;
+      width: 50px;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+}

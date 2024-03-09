@@ -1,0 +1,31 @@
+<div id="bar"
+     class="rounded shadow px-4 d-flex align-items-center justify-content-between">
+  <span class="d-flex flex-column align-items-center justify-content-between">
+    <i class="fa-solid fa-list-check"></i>
+    <p class="m-0">
+      TASKII
+    </p>
+  </span>
+  <div class="d-flex align-items-center">
+    <span id="login"
+          class="d-flex flex-column align-items-center justify-content-between me-5"
+          routerLink="login"
+          *ngIf="page != 'login'">
+      <i class="fa-solid fa-right-to-bracket"></i>
+      <p class="m-0">
+        login
+      </p>
+    </span>
+    <span *ngIf="page != 'sign'"
+          id="signin"
+          class="d-flex flex-column align-items-center justify-content-between"
+          routerLink="signup">
+      <i class="
+        fa-solid
+        fa-user-plus"></i>
+      <p class="m-0">
+        signup
+      </p>
+    </span>
+  </div>
+</div>
