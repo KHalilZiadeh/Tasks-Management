@@ -1,60 +1,87 @@
 <div id="box"
-     class="rounded bg-light-purple p-3">
+     class="rounded bg-purple p-3">
   <form [formGroup]="authForm"
         (ngSubmit)="onSubmit()">
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text"
-              style="border-top-right-radius: 0; border-bottom-right-radius: 0">@</span>
+    <div class="d-flex align-items-center mb-3 position-relative">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"
+                style="border-top-right-radius: 0; border-bottom-right-radius: 0">@</span>
+        </div>
+        <input type="text"
+               class="form-control me-1"
+               placeholder="username"
+               formControlName="user" />
       </div>
-      <input type="text"
-             class="form-control"
-             placeholder="username"
-             formControlName="user" />
+      <i class="fa-solid fa-circle-exclamation"
+         [ngClass]="authForm.controls['user'].valid ? 'text-light' : 'text-danger'"
+         (mouseenter)="SHOWHINTUSER=true"
+         (mouseleave)="SHOWHINTUSER=false"></i>
+      <app-tooltip *ngIf="SHOWHINTUSER"
+                   class="to-right"
+                   [content]="'user'"></app-tooltip>
     </div>
     <p *ngIf="USERTAKEN"
        class="h6 text-danger">Username Already taken</p>
     <p *ngIf="USEREXIST"
        class="h6 text-danger">Username doesn't exist</p>
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text"
-              style="border-top-right-radius: 0; border-bottom-right-radius: 0">
-          pass
+    <div class="d-flex align-items-center mb-3 position-relative">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"
+                style="border-top-right-radius: 0; border-bottom-right-radius: 0">
+            pass
+          </span>
+        </div>
+        <input type="password"
+               class="form-control"
+               placeholder="password"
+               formControlName="pass" />
+        <span class="input-group-text me-1"
+              id="eye">
+          <i *ngIf="!SHOWPASS"
+             class="fa-solid fa-eye"
+             (click)="togglePass($event)"></i>
+          <i *ngIf="SHOWPASS"
+             class="fa-solid fa-eye-slash"
+             (click)="togglePass($event)"></i>
         </span>
       </div>
-      <input type="password"
-             class="form-control"
-             placeholder="password"
-             formControlName="pass" />
-      <span class="input-group-text"
-            id="eye">
-        <i *ngIf="!SHOWPASS"
-           class="fa-solid fa-eye"
-           (click)="togglePass($event)"></i>
-        <i *ngIf="SHOWPASS"
-           class="fa-solid fa-eye-slash"
-           (click)="togglePass($event)"></i>
-      </span>
+      <i class="fa-solid fa-circle-exclamation"
+         [ngClass]="authForm.controls['pass'].valid ? 'text-light' : 'text-danger'"
+         (mouseenter)="SHOWHINTPASS = true"
+         (mouseleave)="SHOWHINTPASS=false"></i>
+      <app-tooltip *ngIf="SHOWHINTPASS"
+                   class="to-right"
+                   [content]="'pass'"></app-tooltip>
     </div>
     <div *ngIf="SHOWCONF"
-         class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text"
-              style="border-top-right-radius: 0; border-bottom-right-radius: 0">
-          passConf
-        </span>
-      </div>
-      <input type="{{ toggleType(SHOWPASS) }}"
-             class="form-control"
-             placeholder="password"
-             formControlName="passCon"
-             (keyup)="
+         class="d-flex align-items-center mb-3 position-relative">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"
+                style="border-top-right-radius: 0; border-bottom-right-radius: 0">
+            passConf
+          </span>
+        </div>
+        <input type="{{ toggleType(SHOWPASS) }}"
+               class="form-control me-1"
+               placeholder="password"
+               formControlName="passCon"
+               (keyup)="
           onPressValidatePass(
             authForm.controls['pass'].value,
             authForm.controls['passCon'].value!
-          )
-        " />
+            )
+            " />
+      </div>
+      <i class="fa-solid fa-circle-exclamation"
+         [ngClass]="authForm.controls['passCon'].valid ? 'text-light' : 'text-danger'"
+         (mouseenter)="SHOWHINTPASSCON=true"
+         (mouseleave)="SHOWHINTPASSCON=false"></i>
+      <app-tooltip *ngIf="SHOWHINTPASSCON"
+                   class="to-right"
+                   [content]="'passcon'"></app-tooltip>
     </div>
     <p *ngIf="WRONG"
        class="h6 text-danger">Wrong password</p>
@@ -66,7 +93,9 @@
               class="btn btn-light c-purple me-3">
         {{ page }}
       </button>
-      <p *ngIf="!SHOWCONF">new? <a [routerLink]="['/signup']">joinus</a></p>
+      <p *ngIf="!SHOWCONF"
+         class="text-light">new? <a [routerLink]="
+         ['/signup']">joinus</a></p>
     </div>
   </form>
 </div>

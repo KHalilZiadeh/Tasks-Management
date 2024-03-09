@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./landing-page.component.scss', '../../../../styles.scss'],
 })
 export class LandingPageComponent implements OnInit {
-  landing: string = 'landing';
   constructor() {}
 
   ngOnInit(): void {}

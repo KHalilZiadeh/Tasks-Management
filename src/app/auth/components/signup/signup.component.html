@@ -1,1 +1,11 @@
-<p>signup works!</p>
+<div id="page-body"
+     class="bg-light-blue d-flex flex-column align-items-center justify-content-start pt-5">
+  <app-header-bar class="c-light-purple"
+                  [page]="'signup'"></app-header-bar>
+  <div class="w-100 d-flex align-items-center justify-content-around px-2">
+    <app-auth-prompet [page]="'signup'"></app-auth-prompet>
+    <img src="../../../../assets/imgs/tasks.png"
+         alt="tasks management"
+         class="align-self-end">
+  </div>
+</div>

@@ -1,6 +1,7 @@
 <div id="bar"
      class="rounded shadow px-4 d-flex align-items-center justify-content-between">
-  <span class="d-flex flex-column align-items-center justify-content-between">
+  <span class="d-flex flex-column align-items-center justify-content-between"
+        routerLink="landing">
     <i class="fa-solid fa-list-check"></i>
     <p class="m-0">
       TASKII
@@ -8,7 +9,7 @@
   </span>
   <div class="d-flex align-items-center">
     <span id="login"
-          class="d-flex flex-column align-items-center justify-content-between me-5"
+          class="d-flex flex-column align-items-center justify-content-between"
           routerLink="login"
           *ngIf="page != 'login'">
       <i class="fa-solid fa-right-to-bracket"></i>
@@ -16,9 +17,9 @@
         login
       </p>
     </span>
-    <span *ngIf="page != 'sign'"
+    <span *ngIf="page != 'signup'"
           id="signin"
-          class="d-flex flex-column align-items-center justify-content-between"
+          class="d-flex flex-column align-items-center justify-content-between ms-5"
           routerLink="signup">
       <i class="
         fa-solid

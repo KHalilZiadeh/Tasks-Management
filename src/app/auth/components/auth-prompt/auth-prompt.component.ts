@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsersService } from '../../../shared/services/users-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-auth-prompet',
@@ -19,11 +20,15 @@ export class AuthPrompetComponent implements OnInit {
   passwordRegex: RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
   SHOWPASS: boolean = false;
   SHOWCONF: boolean = false;
+  SHOWHINTUSER: boolean = false;
+  SHOWHINTPASS: boolean = false;
+  SHOWHINTPASSCON: boolean = false;
 
   constructor(
     private router: Router,
     private formB: FormBuilder,
-    private users: UsersService
+    private users: UsersService,
+    private toastrService: ToastrService
   ) {
     this.authForm = formB.group({
       user: ['', [Validators.required, Validators.minLength(4)]],

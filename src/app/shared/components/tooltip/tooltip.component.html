@@ -1,0 +1,14 @@
+<div id="tooltip">
+  <p *ngIf="content == 'user'">-Username should be at least 4 characters</p>
+  <div *ngIf="content =='pass'"
+       class="pass">
+    <p>-Password should be at least 8 characters</p>
+    <p>-Password should containe 1 upper letter</p>
+    <p>-Password should containe 1 lower letter</p>
+    <p>-Password should containe 1 number</p>
+  </div>
+  <div *ngIf="content =='passcon'"
+       class="pass">
+    <p>-Password confermation should match password</p>
+  </div>
+</div>
