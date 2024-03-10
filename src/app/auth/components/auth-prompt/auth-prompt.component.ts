@@ -38,6 +38,7 @@ export class AuthPrompetComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.page);
     this.SHOWCONF = this.page == 'signup' ? true : false;
     if (this.SHOWCONF) {
       this.authForm.controls['passCon'].setValidators(Validators.required);
@@ -65,7 +66,8 @@ export class AuthPrompetComponent implements OnInit {
 
   onSubmit(): void {
     if (this.authForm.valid) {
-      let authUser: string = this.authForm.controls['user'].value!;
+      let authUser: string =
+        this.authForm.controls['user'].value!.toLowerCase();
       let authPass: string = this.authForm.controls['pass'].value!;
       let authPassCon: string = this.authForm.controls['passCon'].value!;
       switch (this.page) {
@@ -77,31 +79,38 @@ export class AuthPrompetComponent implements OnInit {
           }
           this.users.checkUser(authUser).subscribe((userId) => {
             if (Number(userId) != -1) {
+              this.userRegisterToast(false);
               this.USERTAKEN = true;
             } else {
               this.USERTAKEN = false;
             }
             if (!this.NOMATCH && !this.USERTAKEN) {
               this.users.addUser(authUser, authPass);
-              localStorage.setItem('user', authUser);
-              this.router.navigate(['/home']);
+              this.userRegisterToast(true);
+              setTimeout(() => {
+                this.router.navigate(['/landing', 'login']);
+              }, 800);
             }
           });
           break;
 
         case 'login':
-          this.users.checkUser(authUser).subscribe((userID) => {
+          this.users.checkUser(authUser.toLowerCase()).subscribe((userID) => {
             if (Number(userID) > -1) {
               this.USEREXIST = false;
               this.users.getUser(userID).subscribe((user) => {
                 if (this.validatePass(authPass, user.password)) {
                   localStorage.setItem('user', authUser);
-                  this.router.navigate(['/home']);
+                  this.userLoginToast(true);
+                  setTimeout(() => {
+                    this.router.navigate(['/home']);
+                  }, 800);
                 } else {
-                  this.WRONG;
+                  this.WRONG = true;
                 }
               });
             } else {
+              this.userLoginToast(false);
               this.USEREXIST = true;
             }
           });
@@ -119,5 +128,48 @@ export class AuthPrompetComponent implements OnInit {
 
   toggleType(showPass: boolean): string {
     return showPass == true ? 'text' : 'password';
+  }
+
+  userRegisterToast(success: boolean): void {
+    success
+      ? this.toastrService.success(
+          'You will be redirected to the login page',
+          'User added successfully',
+          {
+            timeOut: 700,
+            progressBar: true,
+            positionClass: 'toast-bottom-center',
+          }
+        )
+      : this.toastrService.error(
+          'Please select anothr username',
+          'Username already taken',
+          {
+            timeOut: 1500,
+            progressBar: true,
+            positionClass: 'toast-bottom-center',
+          }
+        );
+  }
+
+  userLoginToast(status: boolean): void {
+    status
+      ? this.toastrService.success(
+          'You will be redirected to the home page',
+          'login successful',
+          {
+            timeOut: 700,
+            positionClass: 'toast-bottom-center',
+          }
+        )
+      : this.toastrService.error(
+          'Please check your username',
+          'Username does not exist',
+          {
+            timeOut: 1500,
+            progressBar: true,
+            positionClass: 'toast-bottom-center',
+          }
+        );
   }
 }

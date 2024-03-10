@@ -19,7 +19,7 @@ import { ToastContainerDirective, ToastrModule } from 'ngx-toastr';
     HttpClientModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot({}),
+    ToastrModule.forRoot({ preventDuplicates: true }),
   ],
   providers: [],
   bootstrap: [AppComponent],

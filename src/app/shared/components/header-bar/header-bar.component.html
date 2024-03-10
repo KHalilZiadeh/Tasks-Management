@@ -10,7 +10,7 @@
   <div class="d-flex align-items-center">
     <span id="login"
           class="d-flex flex-column align-items-center justify-content-between"
-          routerLink="login"
+          [routerLink]="['/landing','login']"
           *ngIf="page != 'login'">
       <i class="fa-solid fa-right-to-bracket"></i>
       <p class="m-0">
@@ -20,7 +20,7 @@
     <span *ngIf="page != 'signup'"
           id="signin"
           class="d-flex flex-column align-items-center justify-content-between ms-5"
-          routerLink="signup">
+          [routerLink]="['/landing','signup']">
       <i class="
         fa-solid
         fa-user-plus"></i>

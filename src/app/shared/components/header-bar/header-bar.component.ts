@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header-bar',
@@ -8,9 +9,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class HeaderBarComponent implements OnInit {
   @Input() page!: string;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {
-    console.log(this.page);
-  }
+  ngOnInit(): void {}
 }

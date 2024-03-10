@@ -1,4 +1,35 @@
 {
-  "users": [],
+  "users": [
+    {
+      "id": "0",
+      "username": "khalil",
+      "password": "Kk*123123"
+    },
+    {
+      "id": "1",
+      "username": "ahmed",
+      "password": "Aa*123123"
+    },
+    {
+      "id": "2",
+      "username": "alex",
+      "password": "Aa*123123"
+    },
+    {
+      "id": "3",
+      "username": "thom",
+      "password": "Tt*123123"
+    },
+    {
+      "id": "4",
+      "username": "mark",
+      "password": "Mm*123123"
+    },
+    {
+      "id": "5",
+      "username": "matt",
+      "password": "Mm*123123"
+    }
+  ],
   "tasks": []
 }
