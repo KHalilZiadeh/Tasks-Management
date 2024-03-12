@@ -14,7 +14,6 @@ import { HomeModule } from './home/home.module';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
@@ -22,6 +21,7 @@ import { HomeModule } from './home/home.module';
     BrowserAnimationsModule,
     ToastrModule.forRoot({ preventDuplicates: true }),
     HomeModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

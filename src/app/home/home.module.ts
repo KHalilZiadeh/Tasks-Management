@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
-import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { TaskFormComponent } from './task-form/task-form.component';
-
-const routes: Routes = [{ path: '', component: HomeComponent }];
+import { HomeRoutingModule } from './home-routing.module';
 
 @NgModule({
   declarations: [HomeComponent, TaskFormComponent],
-  imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
+  imports: [CommonModule, SharedModule, HomeRoutingModule],
 })
 export class HomeModule {}

@@ -7,10 +7,10 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class HeaderBarComponent implements OnInit {
   @Input() page!: string;
-
+  align!:string
   constructor() {}
 
   ngOnInit(): void {
-    console.log(this.page)
+    this.align = this.page == 'home' ? 'end' : 'spread'
   }
 }

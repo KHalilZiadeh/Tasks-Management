@@ -10,6 +10,7 @@
       <th scope="col"
           (click)="selectTo()">To</th>
       <th scope="col">Action</th>
+      <th scope="col">Status</th>
     </tr>
   </thead>
   <tbody>
@@ -22,25 +23,12 @@
         <p class="ps-2">
           <small>{{ task.taskTxt }}</small>
         </p>
-        <!-- <app-task-input *ngIf="selectedId == task.id"
-                        [taskId]="task.id"
-                        [taskTask]="task.taskTxt"
-                        (onTaskChange)="editTask($event)"></app-task-input> -->
       </td>
       <td>{{ task.from }}</td>
       <td>{{ task.to }}</td>
       <td>
-        <div id="{{ task.taskId }}"
+        <div id="action-{{ task.taskId }}"
              class="d-flex align-item-center justify-content-evenly">
-          <button *ngIf="user == task.to && task.status != 'done'"
-                  (click)="markAsDone($event)"
-                  class="btn btn-primary">
-            complete
-          </button>
-          <button *ngIf="user == task.to && task.status == 'done'"
-                  class="btn btn-success">
-            done
-          </button>
           <button *ngIf="user == task.from"
                   class="btn btn-secondary me-1"
                   (click)="showEdit($event)">
@@ -50,6 +38,20 @@
                   class="btn btn-danger"
                   (click)="deleteTask($event)">
             delete
+          </button>
+        </div>
+      </td>
+      <td>
+        <div id="status-{{ task.taskId }}"
+             class="d-flex align-item-center justify-content-evenly">
+          <button *ngIf="user == task.to && task.status != 'done'"
+                  (click)="markAsDone($event)"
+                  class="btn btn-primary">
+            complete
+          </button>
+          <button *ngIf="user == task.to && task.status == 'done'"
+                  class="btn btn-success">
+            done
           </button>
         </div>
       </td>

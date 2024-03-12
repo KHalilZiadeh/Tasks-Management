@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeRoutingModule } from './home/home-routing.module';
 
 const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -13,21 +14,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./home/home.module').then((home) => home.HomeModule),
   },
-  {
-    path: 'tasks',
-    loadChildren: () =>
-      import('./tasks/tasks.module').then((tasks) => tasks.TasksModule),
-  },
-  {
-    path: 'analyze',
-    loadChildren: () =>
-      import('./analyze/analyze.module').then((analyze) => analyze.AnalyzeModule),
-  },
   { path: '**', redirectTo: 'landing', pathMatch: 'full' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes),HomeRoutingModule],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
