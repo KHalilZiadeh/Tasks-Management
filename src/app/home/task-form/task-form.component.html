@@ -1,0 +1,69 @@
+<form [formGroup]="taskForm"
+      (ngSubmit)="onSubmit()">
+  <div class="border border-0 rounded p-3 d-flex flex-wrap align-items-center justify-content-evenly h-100"
+       id="box">
+    <div class="mb-3 w-100">
+      <label for="title"
+             class="h4">Task title</label>
+      <input type="text"
+             class="form-control"
+             id="title"
+             placeholder="Task title"
+             formControlName="title" />
+    </div>
+    <div class="mb-3 w-100"
+         id="area">
+      <label for="task"
+             class="h5">Task</label>
+      <textarea name="task"
+                id="task"
+                class="form-control border"
+                placeholder="Add task..."
+                formControlName="taskTxt"></textarea>
+      <p *ngIf="taskForm.controls['taskTxt'].valid == false"
+         class="text-danger h6">
+        Task Can't be empty
+      </p>
+    </div>
+    <div class="d-inline-flex flex-column align-items-center mb-3 w-50 pe-1"
+         id="sides">
+      <label for="assignee"
+             class="h6">Assign to:</label>
+      <select name="assignee"
+              id="assignee"
+              class="rounded px-1 w-100"
+              placeholder="select user"
+              formControlName="assignee">
+        <option value=""
+                disabled
+                selected
+                hidden>User to assign to</option>
+        <option *ngFor="let usr of withOutMe"
+                [attr.value]="usr.username">
+          {{ usr.username }}
+        </option>
+      </select>
+      <p *ngIf="taskForm.controls['assignee'].value == ''"
+         class="text-danger h6">
+        Must be assigened
+      </p>
+    </div>
+    <div class="d-inline-flex flex-column align-items-center mb-3 w-50 ps-1"
+         id="sides">
+      <label for="date"
+             class="h6">DeadLine</label>
+      <input type="date"
+             id="date"
+             name="date"
+             [attr.value]="TODAY"
+             [attr.min]="TODAY"
+             class="rounded px-1 w-100"
+             formControlName="deadline" />
+    </div>
+    <button [disabled]="taskForm.invalid"
+            type="submit"
+            class="btn btn-primary w-100">
+      Add task
+    </button>
+  </div>
+</form>

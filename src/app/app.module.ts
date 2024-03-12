@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastContainerDirective, ToastrModule } from 'ngx-toastr';
+import { HomeModule } from './home/home.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import { ToastContainerDirective, ToastrModule } from 'ngx-toastr';
     FontAwesomeModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({ preventDuplicates: true }),
+    HomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,0 +1,43 @@
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">User</th>
+      <th scope="col">Progress</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of usersData; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td class="p-0"
+          id="td-{{i+1}}"
+          (click)="select($event)">
+        <span class="ps-2"
+              id="span-{{i+1}}"
+              (click)="select($event)">{{ user.username }}</span>
+      </td>
+      <td>
+        <div class="d-inline-block"
+             style="width: 96%;">
+          <div class="progress">
+            <div class="progress-bar"
+                 role="progressbar"
+                 [style.width]="user.percent"
+                 [attr.aria-valuenow]="user.percent"
+                 aria-valuemin="0"
+                 aria-valuemax="100"></div>
+          </div>
+        </div>
+        <div *ngIf="selected == i+1"
+             class="info d-flex align-items-center justify-content-evenly">
+          <p class="d-inline-block">done: {{user.done}}</p>
+          <p class="d-inline-block">yet: {{user.yet}}</p>
+          <p class="d-inline-block">totalTasks: {{user.totalTasks}}</p>
+        </div>
+      </td>
+      <td *ngIf="i == 0"
+          [attr.rowspan]="usersData.length"></td>
+    </tr>
+  </tbody>
+</table>

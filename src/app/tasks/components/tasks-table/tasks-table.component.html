@@ -1,0 +1,58 @@
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th scope="col"
+          (click)="viewAll()">#</th>
+      <th scope="col"
+          (click)="selectBoth()">Task</th>
+      <th scope="col"
+          (click)="selectFrom()">From</th>
+      <th scope="col"
+          (click)="selectTo()">To</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let task of filteredTasks; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>
+        <h5>{{ task.title }}</h5>
+        <hr style="width: 150px"
+            class="mt-1 mb-2" />
+        <p class="ps-2">
+          <small>{{ task.taskTxt }}</small>
+        </p>
+        <!-- <app-task-input *ngIf="selectedId == task.id"
+                        [taskId]="task.id"
+                        [taskTask]="task.taskTxt"
+                        (onTaskChange)="editTask($event)"></app-task-input> -->
+      </td>
+      <td>{{ task.from }}</td>
+      <td>{{ task.to }}</td>
+      <td>
+        <div id="{{ task.taskId }}"
+             class="d-flex align-item-center justify-content-evenly">
+          <button *ngIf="user == task.to && task.status != 'done'"
+                  (click)="markAsDone($event)"
+                  class="btn btn-primary">
+            complete
+          </button>
+          <button *ngIf="user == task.to && task.status == 'done'"
+                  class="btn btn-success">
+            done
+          </button>
+          <button *ngIf="user == task.from"
+                  class="btn btn-secondary me-1"
+                  (click)="showEdit($event)">
+            edit
+          </button>
+          <button *ngIf="user == task.from"
+                  class="btn btn-danger"
+                  (click)="deleteTask($event)">
+            delete
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

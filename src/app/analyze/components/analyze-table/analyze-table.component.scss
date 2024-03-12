@@ -1,0 +1,38 @@
+table {
+  width: 800px;
+  // border-collapse: collapse;
+  border-top-left-radius: 1rem;
+
+
+  th,
+  td {
+    width: 10%;
+    padding: 10px;
+    border: 1px solid #000;
+    text-align: left;
+    vertical-align: middle;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  th {
+    background-color: #333;
+    color: #fff;
+  }
+
+  th:first-child,
+  td:first-child {
+    width: 3%;
+  }
+
+  th:nth-child(3),
+  td:nth-child(3) {
+    width: 60%;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+}

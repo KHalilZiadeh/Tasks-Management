@@ -1,5 +1,5 @@
 <div id="bar"
-     class="rounded shadow px-4 d-flex align-items-center justify-content-between">
+     class="rounded shadow px-4 d-flex align-items-center justify-content-evenly">
   <span class="d-flex flex-column align-items-center justify-content-between"
         routerLink="landing">
     <i class="fa-solid fa-list-check"></i>
@@ -7,17 +7,19 @@
       TASKII
     </p>
   </span>
-  <div class="d-flex align-items-center">
+  <div class="
+       d-flex
+       align-items-center">
     <span id="login"
           class="d-flex flex-column align-items-center justify-content-between"
           [routerLink]="['/landing','login']"
-          *ngIf="page != 'login'">
+          *ngIf="page == 'signup' || page == 'landing'">
       <i class="fa-solid fa-right-to-bracket"></i>
       <p class="m-0">
         login
       </p>
     </span>
-    <span *ngIf="page != 'signup'"
+    <span *ngIf="page == 'login' || page == 'landing'"
           id="signin"
           class="d-flex flex-column align-items-center justify-content-between ms-5"
           [routerLink]="['/landing','signup']">

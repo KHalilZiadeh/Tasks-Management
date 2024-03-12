@@ -103,7 +103,7 @@ export class AuthPrompetComponent implements OnInit {
                   localStorage.setItem('user', authUser);
                   this.userLoginToast(true);
                   setTimeout(() => {
-                    this.router.navigate(['/home']);
+                       this.router.navigate(['/home']);
                   }, 800);
                 } else {
                   this.WRONG = true;

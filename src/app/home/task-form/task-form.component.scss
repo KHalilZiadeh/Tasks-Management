@@ -1,0 +1,34 @@
+form {
+  width: 400px;
+  height: 100%;
+
+  #box {
+    height: 100%;
+    background-color: white;
+
+    #area {
+      height: 260px;
+
+      textarea {
+        height: 200px;
+        resize: none;
+        border: 1px solid #dee2e6;
+      }
+    }
+
+
+    #sides {
+      height: 80px;
+
+      p {
+        margin: 0;
+      }
+    }
+
+    label+select,
+    label+input[type=date] {
+      height: 30px;
+      border: 1px solid #dee2e6;
+    }
+  }
+}
