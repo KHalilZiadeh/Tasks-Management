@@ -1,6 +1,5 @@
 <div id="bar"
-     class="rounded shadow px-4 d-flex align-items-center"
-     [ngClass]="[align == 'end' ? 'justify-content-end':'justify-content-between']">
+     class="rounded shadow px-4 d-flex align-items-center justify-content-between">
   <span class="d-flex flex-column align-items-center justify-content-between"
         routerLink="landing">
     <i class="fa-solid fa-list-check"></i>
@@ -32,4 +31,10 @@
       </p>
     </span>
   </div>
+  <span *ngIf="LOGGEDIN"
+        class="d-flex flex-column align-items-center justify-content-between"
+        (click)="logOut()">
+    <i class="fa-solid fa-right-from-bracket"></i>
+    <p class="m-0">log out</p>
+  </span>
 </div>

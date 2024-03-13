@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header-bar',
@@ -8,9 +10,19 @@ import { Component, Input, OnInit } from '@angular/core';
 export class HeaderBarComponent implements OnInit {
   @Input() page!: string;
   align!:string
-  constructor() {}
+  LOGGEDIN:boolean = false
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.align = this.page == 'home' ? 'end' : 'spread'
+    if('LOGGEDIN' in localStorage){
+      this.LOGGEDIN = true
+    }
+  }
+
+  logOut():void {
+    this.authService.logOut()
+    this.router.navigate(['/landing'])
   }
 }

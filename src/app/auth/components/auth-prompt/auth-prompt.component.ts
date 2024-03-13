@@ -2,7 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsersService } from '../../../shared/services/users-service.service';
-import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-auth-prompet',
@@ -28,7 +29,8 @@ export class AuthPrompetComponent implements OnInit {
     private router: Router,
     private formB: FormBuilder,
     private users: UsersService,
-    private toastrService: ToastrService
+    private toastService:ToastService,
+    private authService: AuthService
   ) {
     this.authForm = formB.group({
       user: ['', [Validators.required, Validators.minLength(4)]],
@@ -38,7 +40,6 @@ export class AuthPrompetComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.page);
     this.SHOWCONF = this.page == 'signup' ? true : false;
     if (this.SHOWCONF) {
       this.authForm.controls['passCon'].setValidators(Validators.required);
@@ -46,22 +47,11 @@ export class AuthPrompetComponent implements OnInit {
   }
 
   validatePass(pass: string, passCon: string): boolean {
-    let passMatch: boolean = false;
-    if (pass !== passCon) {
-      passMatch = false;
-    } else {
-      passMatch = true;
-    }
-    return passMatch;
+    return this.authService.validatePass(pass, passCon)
   }
 
-  onPressValidatePass(pass: string, passCon: string): boolean {
-    if (pass !== passCon) {
-      this.NOMATCH = true;
-    } else {
-      this.NOMATCH = false;
-    }
-    return false;
+  onPressValidatePass(pass: string, passCon: string) {
+    this.NOMATCH = this.authService.onPressValidatePass(pass, passCon)
   }
 
   onSubmit(): void {
@@ -72,7 +62,7 @@ export class AuthPrompetComponent implements OnInit {
       let authPassCon: string = this.authForm.controls['passCon'].value!;
       switch (this.page) {
         case 'signup':
-          if (this.validatePass(authPass, authPassCon)) {
+          if (this.authService.validatePass(authPass, authPassCon)) {
             this.NOMATCH = false;
           } else {
             this.NOMATCH = true;
@@ -99,10 +89,12 @@ export class AuthPrompetComponent implements OnInit {
             if (Number(userID) > -1) {
               this.USEREXIST = false;
               this.users.getUser(userID).subscribe((user) => {
-                if (this.validatePass(authPass, user.password)) {
+                if (this.authService.validatePass(authPass, user.password)) {
                   localStorage.setItem('user', authUser);
                   this.userLoginToast(true);
+                  this.authService.isLoggedIn= true
                   setTimeout(() => {
+                    localStorage.setItem('taskUser', JSON.stringify({authUser, userID}))
                        this.router.navigate(['/home']);
                   }, 800);
                 } else {
@@ -120,56 +112,18 @@ export class AuthPrompetComponent implements OnInit {
   }
 
   togglePass(event: any) {
-    let type = event.target.parentElement.previousSibling.type;
-    event.target.parentElement.previousSibling.type =
-      type == 'text' ? 'password' : 'text';
-    this.SHOWPASS = !this.SHOWPASS;
+    this.SHOWPASS = this.authService.togglePass(event)
   }
 
   toggleType(showPass: boolean): string {
-    return showPass == true ? 'text' : 'password';
+    return this.authService.toggleType(showPass)
   }
 
   userRegisterToast(success: boolean): void {
-    success
-      ? this.toastrService.success(
-          'You will be redirected to the login page',
-          'User added successfully',
-          {
-            timeOut: 700,
-            progressBar: true,
-            positionClass: 'toast-bottom-center',
-          }
-        )
-      : this.toastrService.error(
-          'Please select anothr username',
-          'Username already taken',
-          {
-            timeOut: 1500,
-            progressBar: true,
-            positionClass: 'toast-bottom-center',
-          }
-        );
+    this.toastService.userRegisterToast(success)
   }
 
   userLoginToast(status: boolean): void {
-    status
-      ? this.toastrService.success(
-          'You will be redirected to the home page',
-          'login successful',
-          {
-            timeOut: 700,
-            positionClass: 'toast-bottom-center',
-          }
-        )
-      : this.toastrService.error(
-          'Please check your username',
-          'Username does not exist',
-          {
-            timeOut: 1500,
-            progressBar: true,
-            positionClass: 'toast-bottom-center',
-          }
-        );
+    this.toastService.userLoginToast(status)
   }
 }
