@@ -27,27 +27,31 @@
       <td>{{ task.from }}</td>
       <td>{{ task.to }}</td>
       <td>
-        <div id="action-{{ task.taskId }}"
-             class="d-flex align-item-center justify-content-evenly">
-          <button *ngIf="user == task.from"
-                  class="btn btn-secondary me-1"
+        <div id="action-{{ task.id }}"
+             class="d-flex align-item-center justify-content-evenly"
+             *ngIf="user == task.from">
+          <button class="btn btn-secondary me-1"
                   (click)="showEdit($event)">
             edit
           </button>
-          <button *ngIf="user == task.from"
-                  class="btn btn-danger"
+          <button class="btn btn-danger"
                   (click)="deleteTask($event)">
             delete
           </button>
         </div>
       </td>
       <td>
-        <div id="status-{{ task.taskId }}"
+        <div id="status-{{ task.id }}"
              class="d-flex align-item-center justify-content-evenly">
           <button *ngIf="user == task.to && task.status != 'done'"
                   (click)="markAsDone($event)"
                   class="btn btn-primary">
             complete
+          </button>
+          <button *ngIf="task.status == 'yet'"
+                  (click)="markAsDone($event)"
+                  class="btn btn-warning">
+            yet
           </button>
           <button *ngIf="user == task.to && task.status == 'done'"
                   class="btn btn-success">

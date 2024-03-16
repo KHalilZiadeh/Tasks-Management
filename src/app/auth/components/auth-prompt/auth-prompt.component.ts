@@ -13,12 +13,10 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 export class AuthPrompetComponent implements OnInit {
   @Input() page: string = '';
 
-  WRONG: boolean = false;
-  USERTAKEN: boolean = false;
-  USEREXIST: boolean = false;
-  NOMATCH: boolean = false;
   authForm: FormGroup;
   passwordRegex: RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+  WRONG:boolean= false
+  NOMATCH:boolean= false
   SHOWPASS: boolean = false;
   SHOWCONF: boolean = false;
   SHOWHINTUSER: boolean = false;
@@ -26,10 +24,7 @@ export class AuthPrompetComponent implements OnInit {
   SHOWHINTPASSCON: boolean = false;
 
   constructor(
-    private router: Router,
     private formB: FormBuilder,
-    private users: UsersService,
-    private toastService:ToastService,
     private authService: AuthService
   ) {
     this.authForm = formB.group({
@@ -46,8 +41,8 @@ export class AuthPrompetComponent implements OnInit {
     }
   }
 
-  validatePass(pass: string, passCon: string): boolean {
-    return this.authService.validatePass(pass, passCon)
+  validatePass(pass: string, passCon: string) {
+    this.WRONG = this.authService.validatePass(pass, passCon)
   }
 
   onPressValidatePass(pass: string, passCon: string) {
@@ -62,50 +57,11 @@ export class AuthPrompetComponent implements OnInit {
       let authPassCon: string = this.authForm.controls['passCon'].value!;
       switch (this.page) {
         case 'signup':
-          if (this.authService.validatePass(authPass, authPassCon)) {
-            this.NOMATCH = false;
-          } else {
-            this.NOMATCH = true;
-          }
-          this.users.checkUser(authUser).subscribe((userId) => {
-            if (Number(userId) != -1) {
-              this.userRegisterToast(false);
-              this.USERTAKEN = true;
-            } else {
-              this.USERTAKEN = false;
-            }
-            if (!this.NOMATCH && !this.USERTAKEN) {
-              this.users.addUser(authUser, authPass);
-              this.userRegisterToast(true);
-              setTimeout(() => {
-                this.router.navigate(['/landing', 'login']);
-              }, 800);
-            }
-          });
+          this.authService.signup(authUser, authPass, authPassCon)
           break;
 
         case 'login':
-          this.users.checkUser(authUser.toLowerCase()).subscribe((userID) => {
-            if (Number(userID) > -1) {
-              this.USEREXIST = false;
-              this.users.getUser(userID).subscribe((user) => {
-                if (this.authService.validatePass(authPass, user.password)) {
-                  localStorage.setItem('user', authUser);
-                  this.userLoginToast(true);
-                  this.authService.isLoggedIn= true
-                  setTimeout(() => {
-                    localStorage.setItem('taskUser', JSON.stringify({authUser, userID}))
-                       this.router.navigate(['/home']);
-                  }, 800);
-                } else {
-                  this.WRONG = true;
-                }
-              });
-            } else {
-              this.userLoginToast(false);
-              this.USEREXIST = true;
-            }
-          });
+          this.authService.login(authUser, authPass)
           break;
       }
     }
@@ -119,11 +75,4 @@ export class AuthPrompetComponent implements OnInit {
     return this.authService.toggleType(showPass)
   }
 
-  userRegisterToast(success: boolean): void {
-    this.toastService.userRegisterToast(success)
-  }
-
-  userLoginToast(status: boolean): void {
-    this.toastService.userLoginToast(status)
-  }
 }

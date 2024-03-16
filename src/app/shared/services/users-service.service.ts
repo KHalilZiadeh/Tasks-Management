@@ -21,7 +21,7 @@ export class UsersService {
         username: username,
         password: password,
       };
-      this.http.post<IUsers>(environment.userBaseLink, this.user).subscribe();
+      this.http.post<IUsers>(environment.usersBaseLink, this.user).subscribe();
     });
   }
 
@@ -57,10 +57,10 @@ export class UsersService {
   }
 
   getAllUsers(): Observable<IUsers[]> {
-    return this.http.get<IUsers[]>(environment.userBaseLink);
+    return this.http.get<IUsers[]>(environment.usersBaseLink);
   }
 
   getUser(id: string): Observable<IUsers> {
-    return this.http.get<IUsers>(`${environment.userBaseLink}${id}`);
+    return this.http.get<IUsers>(`${environment.usersBaseLink}${id}`);
   }
 }

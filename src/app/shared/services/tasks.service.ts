@@ -15,7 +15,7 @@ export class TasksService {
     let task!: ITask
     this.getlastTaskId().subscribe(lastId => {
       task = {
-        taskId: lastId,
+        id: lastId,
         taskTxt: taskTxt,
         from: from,
         to: to,
@@ -23,12 +23,13 @@ export class TasksService {
         title: title,
         deadline: deadline
       }
+      console.log(task)
       this.http.post(environment.tasksBaseLink, task).subscribe()
     })
   }
 
   ediTask(task: ITask): void {
-    this.http.put<ITask>(environment.tasksBaseLink + task.taskId, task).subscribe()
+    this.http.put<ITask>(environment.tasksBaseLink + task.id, task).subscribe()
   }
 
   getlastTaskId(): Observable<string> {
@@ -36,8 +37,8 @@ export class TasksService {
       this.getAllTasks().subscribe(tasks => {
         let id: number = -1
         for (let task of tasks) {
-          if (Number(task.taskId) > id) {
-            id = Number(task.taskId)
+          if (Number(task.id) > id) {
+            id = Number(task.id)
           }
         }
         ObLastId.next(`${id + 1}`)

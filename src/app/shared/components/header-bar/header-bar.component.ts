@@ -16,9 +16,6 @@ export class HeaderBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.align = this.page == 'home' ? 'end' : 'spread'
-    if('LOGGEDIN' in localStorage){
-      this.LOGGEDIN = true
-    }
   }
 
   logOut():void {

@@ -6,8 +6,9 @@ import { SharedRoutingModule } from './shared-routing.module';
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DeleteComponent } from './popups/delete/delete.component';
 @NgModule({
-  declarations: [HeaderBarComponent, TooltipComponent, SideNavComponent],
+  declarations: [HeaderBarComponent, TooltipComponent, SideNavComponent, DeleteComponent],
   imports: [CommonModule, FontAwesomeModule, SharedRoutingModule, ReactiveFormsModule
   ],
   exports: [HeaderBarComponent, TooltipComponent, FontAwesomeModule, SideNavComponent, ReactiveFormsModule

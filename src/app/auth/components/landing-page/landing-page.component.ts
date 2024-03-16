@@ -10,16 +10,5 @@ import { UsersService } from 'src/app/shared/services/users-service.service';
 export class LandingPageComponent implements OnInit {
   constructor(private usersService: UsersService, private router: Router) {}
 
-  ngOnInit(): void {
-    if('taskUser' in localStorage){
-      let localUser = JSON.parse(localStorage.getItem('taskUser')!)
-      this.usersService.getUser(localUser.userID).subscribe(user => {
-        if(user.username === localUser.authUser){
-          let LOGGEDIN:boolean = true
-          localStorage.setItem('LOGGEDIN', JSON.stringify(LOGGEDIN) )
-          this.router.navigate(['/home'])
-        }
-      })
-    }
-  }
+  ngOnInit(): void {}
 }

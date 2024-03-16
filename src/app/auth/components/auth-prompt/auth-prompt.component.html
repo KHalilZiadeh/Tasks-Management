@@ -92,7 +92,8 @@
       <div id="log">
          <button [disabled]="authForm.invalid"
                  type="submit"
-                 class="btn btn-light c-purple me-3">
+                 class="btn btn-light c-purple me-3"
+                 (click)="onSubmit()">
             {{ page }}
          </button>
          <p *ngIf="!SHOWCONF"

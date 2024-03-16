@@ -9,10 +9,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastContainerDirective, ToastrModule } from 'ngx-toastr';
 import { HomeModule } from './home/home.module';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AuthGuard } from './shared/services/auth.guard';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     ReactiveFormsModule,
     FormsModule,
@@ -21,9 +24,9 @@ import { HomeModule } from './home/home.module';
     BrowserAnimationsModule,
     ToastrModule.forRoot({ preventDuplicates: true }),
     HomeModule,
-    AppRoutingModule,
+    MatDialogModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
