@@ -7,6 +7,8 @@ import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DeleteComponent } from './popups/delete/delete.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
+import { DropdownDirective } from './directives/dropdown.directive';
 
 @NgModule({
   declarations: [
@@ -14,6 +16,8 @@ import { DeleteComponent } from './popups/delete/delete.component';
     TooltipComponent,
     SideNavComponent,
     DeleteComponent,
+    DropdownComponent,
+    DropdownDirective,
   ],
   imports: [
     CommonModule,

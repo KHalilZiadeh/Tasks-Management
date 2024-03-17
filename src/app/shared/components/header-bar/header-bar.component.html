@@ -7,6 +7,7 @@
       TASKII
     </p>
   </span>
+  <app-dropdown></app-dropdown>
   <div class="
        d-flex
        align-items-center">
@@ -31,7 +32,7 @@
       </p>
     </span>
   </div>
-  <span *ngIf="page == 'home'"
+  <span *ngIf="page != 'landing'"
         class="d-flex flex-column align-items-center justify-content-between"
         (click)="logOut()">
     <i class="fa-solid fa-right-from-bracket"></i>

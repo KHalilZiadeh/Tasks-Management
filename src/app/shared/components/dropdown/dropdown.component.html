@@ -1,0 +1,21 @@
+<div id="drop-down">
+  <span class="bg-warning"
+        (click)="toggleDropdown()">all</span>
+  <ul class="list-group"
+      [ngClass]="[showDropdown ? 'show':'']">
+    <li class="list-group-item"
+        id="all"
+        (click)="updateFilter($event)"><input type="checkbox"
+             id="all"
+             value="all"
+             checked><label for="all"
+             class="ms-1">all</label></li>
+    <li class="list-group-item"
+        id="{{user.username}}"
+        (click)="updateFilter($event)"
+        *ngFor="let user of allUsers"><input type="checkbox"
+             id="{{user.username}}"
+             value="{{user.username}}"><label class="ms-1"
+             for="{{user.username}}">{{user.username}}</label></li>
+  </ul>
+</div>
