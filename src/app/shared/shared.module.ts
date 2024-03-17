@@ -5,13 +5,30 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedRoutingModule } from './shared-routing.module';
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DeleteComponent } from './popups/delete/delete.component';
+
 @NgModule({
-  declarations: [HeaderBarComponent, TooltipComponent, SideNavComponent, DeleteComponent],
-  imports: [CommonModule, FontAwesomeModule, SharedRoutingModule, ReactiveFormsModule
+  declarations: [
+    HeaderBarComponent,
+    TooltipComponent,
+    SideNavComponent,
+    DeleteComponent,
   ],
-  exports: [HeaderBarComponent, TooltipComponent, FontAwesomeModule, SideNavComponent, ReactiveFormsModule
+  imports: [
+    CommonModule,
+    FontAwesomeModule,
+    SharedRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+  ],
+  exports: [
+    HeaderBarComponent,
+    TooltipComponent,
+    FontAwesomeModule,
+    SideNavComponent,
+    ReactiveFormsModule,
+    FormsModule,
   ],
 })
 export class SharedModule {}

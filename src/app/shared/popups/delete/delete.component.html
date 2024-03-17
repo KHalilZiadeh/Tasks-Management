@@ -6,7 +6,11 @@
     </p>
   </div>
   <div mat-dialog-actions>
-    <button class="btn btn-light">Cancel</button>
-    <button class="btn btn-danger">Delete</button>
+    <button class="btn btn-light"
+            matButton
+            (click)="cancle()">Cancel</button>
+    <button class="btn btn-danger"
+            matButton
+            (click)="confirm()">Delete</button>
   </div>
 </div>

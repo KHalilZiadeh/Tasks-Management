@@ -17,12 +17,23 @@
     <tr *ngFor="let task of filteredTasks; let i = index">
       <td>{{ i + 1 }}</td>
       <td>
-        <h5>{{ task.title }}</h5>
+        <p *ngIf="selectedId != task.id"
+           class="m-0 fst-italic font-weight-bold h4"
+           [ngClass]="task.title == '' ? 'text-secondary' : ''">
+          {{ task.title == '' ? ('No title'|uppercase) : task.title }}</p>
+        <input type="text"
+               *ngIf="selectedId == task.id"
+               [value]="task.title"
+               [(ngModel)]="newTitle">
         <hr style="width: 150px"
             class="mt-1 mb-2" />
-        <p class="ps-2">
+        <p class="ps-2"
+           *ngIf="selectedId != task.id">
           <small>{{ task.taskTxt }}</small>
         </p>
+        <textarea *ngIf="selectedId == task.id"
+                  [value]="task.taskTxt"
+                  [(ngModel)]="newTxt"></textarea>
       </td>
       <td>{{ task.from }}</td>
       <td>{{ task.to }}</td>
@@ -30,24 +41,25 @@
         <div id="action-{{ task.id }}"
              class="d-flex align-item-center justify-content-evenly"
              *ngIf="user == task.from">
-          <button class="btn btn-secondary me-1"
-                  (click)="showEdit($event)">
-            edit
+          <button class="btn me-1"
+                  (click)="showEdit($event, task)"
+                  [ngClass]="mode == 'edit' && selectedId == task.id ? 'btn-success':'btn-secondary'">
+            {{mode == 'edit' && selectedId == task.id ? 'save' : 'edit'}}
           </button>
           <button class="btn btn-danger"
                   (click)="deleteTask($event)">
-            delete
+            {{mode == 'edit' && selectedId == task.id ? 'cancle' : 'delete'}}
+          </button>
+          <button *ngIf="user == task.to && task.status != 'done'"
+                  (click)="markAsDone($event)"
+                  class="btn btn-primary">
+            complete
           </button>
         </div>
       </td>
       <td>
         <div id="status-{{ task.id }}"
              class="d-flex align-item-center justify-content-evenly">
-          <button *ngIf="user == task.to && task.status != 'done'"
-                  (click)="markAsDone($event)"
-                  class="btn btn-primary">
-            complete
-          </button>
           <button *ngIf="task.status == 'yet'"
                   (click)="markAsDone($event)"
                   class="btn btn-warning">
