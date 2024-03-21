@@ -14,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let task of filteredTasks; let i = index">
+    <tr *ngFor="let task of tasksToShow; let i = index">
       <td>{{ i + 1 }}</td>
       <td>
         <p *ngIf="selectedId != task.id"
@@ -39,15 +39,16 @@
       <td>{{ task.to }}</td>
       <td>
         <div id="action-{{ task.id }}"
-             class="d-flex align-item-center justify-content-evenly"
-             *ngIf="user == task.from">
+             class="d-flex align-item-center justify-content-evenly">
           <button class="btn me-1"
                   (click)="showEdit($event, task)"
-                  [ngClass]="mode == 'edit' && selectedId == task.id ? 'btn-success':'btn-secondary'">
+                  [ngClass]="mode == 'edit' && selectedId == task.id ? 'btn-success':'btn-secondary'"
+                  *ngIf="user == task.from">
             {{mode == 'edit' && selectedId == task.id ? 'save' : 'edit'}}
           </button>
           <button class="btn btn-danger"
-                  (click)="deleteTask($event)">
+                  (click)="deleteTask($event)"
+                  *ngIf="user == task.from">
             {{mode == 'edit' && selectedId == task.id ? 'cancle' : 'delete'}}
           </button>
           <button *ngIf="user == task.to && task.status != 'done'"

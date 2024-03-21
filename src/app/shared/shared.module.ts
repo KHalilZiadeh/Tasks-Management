@@ -32,6 +32,7 @@ import { DropdownDirective } from './directives/dropdown.directive';
     FontAwesomeModule,
     SideNavComponent,
     ReactiveFormsModule,
+    DropdownComponent,
     FormsModule,
   ],
 })

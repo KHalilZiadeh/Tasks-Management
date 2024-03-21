@@ -6,15 +6,10 @@ import { TasksService } from '../shared/services/tasks.service';
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
-  styleUrls: ['./tasks.component.scss']
+  styleUrls: ['./tasks.component.scss'],
 })
 export class TasksComponent implements OnInit {
+  constructor() {}
 
-  user!:string
-
-  constructor() { }
-
-  ngOnInit(): void {
-    this.user= localStorage.getItem('user')!
-  }
+  ngOnInit(): void {}
 }

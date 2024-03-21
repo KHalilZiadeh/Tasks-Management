@@ -1,10 +1,6 @@
 <div id="page-body"
-     class="bg-light-blue d-flex flex-wrap align-items-center justify-content-start pt-5 px-3">
-  <app-header-bar class="c-light-purple"></app-header-bar>
-  <app-side-nav></app-side-nav>
-  <div id="placeholder"
-       class="ms-3 d-flex flex-column align-items-center">
-    <app-tasks-table [user]="user"
-                     class="w-50"></app-tasks-table>
-  </div>
+     class="bg-light-blue d-flex flex-column align-items-center justify-content-start pt-5 px-3">
+   <app-header-bar class="c-light-purple mb-2"></app-header-bar>
+   <app-side-nav id="nav"></app-side-nav>
+   <app-tasks-table style="width: 100%;"></app-tasks-table>
 </div>

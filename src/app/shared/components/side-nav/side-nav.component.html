@@ -2,14 +2,18 @@
      class="c-light-purple">
     <ul class="d-flex flex-column align-items-center justify-content-evenly m-0">
         <li class="d-flex align-items-center justify-content-center w-100 h4"
-            routerLink="/home">
+            routerLink="/home"
+            routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{exact:true}">
             <i class="fa-solid fa-house"></i>
         </li>
         <li class="d-flex align-items-center justify-content-center w-100"
             [routerLink]="['/home','tasks']"
-            routerLinkActive="active-link">Tasks</li>
+            routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{exact:true}">Tasks</li>
         <li class="d-flex align-items-center justify-content-center w-100"
             [routerLink]="['/home','analyze']"
-            routerLinkActive="active-link">Analyze</li>
+            routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{exact:true}">Analyze</li>
     </ul>
 </div>

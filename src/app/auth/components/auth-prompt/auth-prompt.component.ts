@@ -15,18 +15,15 @@ export class AuthPrompetComponent implements OnInit {
 
   authForm: FormGroup;
   passwordRegex: RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-  WRONG:boolean= false
-  NOMATCH:boolean= false
+  WRONG: boolean = false;
+  NOMATCH: boolean = false;
   SHOWPASS: boolean = false;
   SHOWCONF: boolean = false;
   SHOWHINTUSER: boolean = false;
   SHOWHINTPASS: boolean = false;
   SHOWHINTPASSCON: boolean = false;
 
-  constructor(
-    private formB: FormBuilder,
-    private authService: AuthService
-  ) {
+  constructor(private formB: FormBuilder, private authService: AuthService) {
     this.authForm = formB.group({
       user: ['', [Validators.required, Validators.minLength(4)]],
       pass: ['', [Validators.required, Validators.pattern(this.passwordRegex)]],
@@ -42,37 +39,37 @@ export class AuthPrompetComponent implements OnInit {
   }
 
   validatePass(pass: string, passCon: string) {
-    this.WRONG = this.authService.validatePass(pass, passCon)
+    this.WRONG = this.authService.validatePass(pass, passCon);
   }
 
   onPressValidatePass(pass: string, passCon: string) {
-    this.NOMATCH = this.authService.onPressValidatePass(pass, passCon)
+    this.NOMATCH = this.authService.onPressValidatePass(pass, passCon);
   }
 
   onSubmit(): void {
     if (this.authForm.valid) {
-      let authUser: string =
-        this.authForm.controls['user'].value!.toLowerCase();
+      let authUser: string = this.authForm.controls['user']
+        .value!.toLowerCase()
+        .trim();
       let authPass: string = this.authForm.controls['pass'].value!;
       let authPassCon: string = this.authForm.controls['passCon'].value!;
       switch (this.page) {
         case 'signup':
-          this.authService.signup(authUser, authPass, authPassCon)
+          this.authService.signup(authUser, authPass, authPassCon);
           break;
 
         case 'login':
-          this.authService.login(authUser, authPass)
+          this.authService.login(authUser, authPass);
           break;
       }
     }
   }
 
   togglePass(event: any) {
-    this.SHOWPASS = this.authService.togglePass(event)
+    this.SHOWPASS = this.authService.togglePass(event);
   }
 
   toggleType(showPass: boolean): string {
-    return this.authService.toggleType(showPass)
+    return this.authService.toggleType(showPass);
   }
-
 }

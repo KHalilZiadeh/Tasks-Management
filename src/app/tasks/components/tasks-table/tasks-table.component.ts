@@ -4,7 +4,6 @@ import { TasksService } from '../../../shared/services/tasks.service';
 import { PopupService } from 'src/app/shared/services/popups/popup.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteComponent } from 'src/app/shared/popups/delete/delete.component';
-// import { ITaskToEdit } from '../interfaces/itask-to-edit';
 
 @Component({
   selector: 'app-tasks-table',
@@ -12,12 +11,12 @@ import { DeleteComponent } from 'src/app/shared/popups/delete/delete.component';
   styleUrls: ['./tasks-table.component.scss'],
 })
 export class TasksTableComponent implements OnInit {
-  @Input() user!: string;
+  user!: string;
   @Input() filterByUser!: string;
   column: string = 'both';
 
   allTasks: ITask[] = [];
-  filteredTasks!: ITask[];
+  tasksToShow!: ITask[];
   selectedId!: string;
   mode!: string;
   newTitle!: string;
@@ -30,16 +29,17 @@ export class TasksTableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.user = JSON.parse(localStorage.getItem('taskUser')!).authUser;
     this.tasksService.getAllTasks().subscribe((reTasks) => {
       this.allTasks = reTasks;
-      this.filteredTasks = this.allTasks;
+      this.tasksToShow = this.allTasks;
+    });
+    this.tasksService.filteredUsers$.subscribe((newValeus) => {
+      this.tasksToShow = this.showFiltered(newValeus);
     });
   }
 
-  ngOnChanges(changes: any): void {
-    // let toFilter: string = changes['filterByUser'].currentValue
-    // if (toFilter !== undefined) this.filteredTasks = this.filterTasks(toFilter, this.allTasks, 'both')
-  }
+  ngOnChanges(changes: any): void {}
 
   filterTasks(user: string, tasks: ITask[], column: string): ITask[] {
     let filtered: ITask[] = tasks.filter((task) => {
@@ -59,37 +59,24 @@ export class TasksTableComponent implements OnInit {
 
   selectFrom(): void {
     this.column = 'from';
-    this.filteredTasks = this.filterTasks(
-      this.user,
-      this.allTasks,
-      this.column
-    );
+    this.tasksToShow = this.filterTasks(this.user, this.allTasks, this.column);
   }
 
   selectTo(): void {
     this.column = 'to';
-    this.filteredTasks = this.filterTasks(
-      this.user,
-      this.allTasks,
-      this.column
-    );
+    this.tasksToShow = this.filterTasks(this.user, this.allTasks, this.column);
   }
 
   selectBoth(): void {
     this.column = 'both';
-    this.filteredTasks = this.filterTasks(
-      this.user,
-      this.allTasks,
-      this.column
-    );
+    this.tasksToShow = this.filterTasks(this.user, this.allTasks, this.column);
   }
 
   viewAll(): void {
-    this.filteredTasks = this.allTasks;
+    this.tasksToShow = this.allTasks;
   }
 
   markAsDone(event: any): void {
-    console.log(event);
     let taskId: string = event.target.parentElement.id.split('-')[1];
     this.tasksService.getTaskById(taskId).subscribe((task) => {
       task.status = 'done';
@@ -97,7 +84,7 @@ export class TasksTableComponent implements OnInit {
       this.allTasks.map((task) => {
         if (task.id === taskId) task.status = 'done';
       });
-      this.filteredTasks.map((task) => {
+      this.tasksToShow.map((task) => {
         if (task.id === taskId) task.status = 'done';
       });
     });
@@ -119,7 +106,7 @@ export class TasksTableComponent implements OnInit {
     this.allTasks = this.allTasks.filter((task) => {
       return task.id !== taskId;
     });
-    this.filteredTasks = this.filteredTasks.filter((task) => {
+    this.tasksToShow = this.tasksToShow.filter((task) => {
       return task.id !== taskId;
     });
   }
@@ -148,7 +135,7 @@ export class TasksTableComponent implements OnInit {
       this.allTasks.map((task) => {
         if (task.id === taskId) task.taskTxt = taskTxt;
       });
-      this.filteredTasks.map((task) => {
+      this.tasksToShow.map((task) => {
         if (task.id === taskId) task.taskTxt = taskTxt;
       });
     });
@@ -156,7 +143,46 @@ export class TasksTableComponent implements OnInit {
     return [taskTitle, taskTxt];
   }
 
+  showFiltered(users: string[]): ITask[] {
+    let tasks: ITask[] = [];
+
+    let filterType = users.includes('all') ? 'sub' : 'add';
+
+    if (filterType === 'add') {
+      users.forEach((usr) => {
+        let userTasks = this.allTasks.filter((task) => {
+          return task.from === usr;
+        });
+        tasks.push(...userTasks);
+      });
+    } else {
+      let userTasks: ITask[] = [];
+      this.allTasks.forEach((task) => {
+        let taskStatus = users.reduce((acc: number, cur: string) => {
+          if (cur === task.from) {
+            acc += 1;
+          }
+          return acc;
+        }, 0);
+        if (taskStatus === 0) {
+          userTasks.push(task);
+        }
+        tasks = userTasks;
+      });
+    }
+    return tasks;
+  }
+
   openDialog(id: string): void {
-    this.dialog.open(DeleteComponent, { data: { id: id } });
+    const dialogRef = this.dialog.open(DeleteComponent, {
+      data: { id: id },
+    });
+
+    dialogRef.afterClosed().subscribe((task) => {
+      console.log('Dialog closed with task:', task);
+      this.tasksToShow = this.tasksToShow.filter(
+        (tsk: ITask) => task.id !== tsk.id
+      );
+    });
   }
 }

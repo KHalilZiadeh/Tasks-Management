@@ -29,20 +29,11 @@
          id="sides">
       <label for="assignee"
              class="h6">Assign to:</label>
-      <select name="assignee"
-              id="assignee"
-              class="rounded px-1 w-100"
-              placeholder="select user"
-              formControlName="assignee">
-        <option value=""
-                disabled
-                selected
-                hidden>User to assign to</option>
-        <option *ngFor="let usr of withOutMe"
-                [attr.value]="usr.username">
-          {{ usr.username }}
-        </option>
-      </select>
+      <app-dropdown [type]="'radio'"
+                    [id]="1"
+                    [usersList]="withOutMe"
+                    (userChoosen)="updateAssignee($event)"
+                    class="z-1"></app-dropdown>
       <p *ngIf="taskForm.controls['assignee'].value == ''"
          class="text-danger h6">
         Must be assigened

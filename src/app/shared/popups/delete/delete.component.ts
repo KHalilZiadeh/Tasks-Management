@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TasksService } from '../../services/tasks.service';
+import { ITask } from '../../interfaces/itask';
 
 @Component({
   selector: 'app-delete',
@@ -21,7 +22,8 @@ export class DeleteComponent implements OnInit {
   }
 
   confirm() {
-    this.tasksService.deleteTask(this.data.id);
-    this.dialogRef.close(true);
+    this.tasksService.deleteTask(this.data.id).subscribe((task: ITask) => {
+      this.dialogRef.close(task);
+    });
   }
 }

@@ -1,25 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { TasksService } from '../../shared/services/tasks.service';
-import { UsersService } from '../../shared/services/users-service.service';
-import { IUsers } from '../../shared/interfaces/iusers';
+import { TasksService } from '../../../shared/services/tasks.service';
+import { UsersService } from '../../../shared/services/users-service.service';
+
 
 @Component({
   selector: 'app-task-form',
   templateUrl: './task-form.component.html',
-  styleUrls: ['./task-form.component.scss']
+  styleUrls: ['./task-form.component.scss'],
 })
 export class TaskFormComponent implements OnInit {
-
   from!: string;
   me!: string;
   taskForm: FormGroup;
-  withOutMe!: IUsers[];
+  withOutMe!: string[];
   TODAY!: string;
   taskTitle!: string;
 
@@ -37,11 +35,12 @@ export class TaskFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.from = localStorage.getItem('user')!;
-    this.me = localStorage.getItem('user')!;
-    this.users.getAllUsers().subscribe((usrs) => {
-      this.withOutMe = usrs.filter((usr) => {
-        return usr.username !== this.me;
+    this.me = JSON.parse(localStorage.getItem('taskUser')!).authUser;
+    this.users.getAllUsers().subscribe((usrs: any) => {
+      this.withOutMe = usrs.map((user: any) => {
+        if (user.username !== this.me) {
+          return user.username
+        }
       });
     });
     let time = new Date();
@@ -67,7 +66,11 @@ export class TaskFormComponent implements OnInit {
     assignee = this.taskForm.controls['assignee'].setValue('');
   }
 
-  // TODO
-  // Make reusable component for the task in the tasks table
-}
+  checkValue() {
+    console.log(this.taskForm.controls['assignee']);
+  }
 
+  updateAssignee(event: any) {
+    this.taskForm.controls['assignee'].setValue(event);
+  }
+}

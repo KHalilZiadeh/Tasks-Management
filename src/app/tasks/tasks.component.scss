@@ -1,6 +1,6 @@
 #placeholder {
   width: calc(100vw - 200px - 32px);
-  height: calc(100vh - 150px - 96px - 32px);
+  height: fit-content;
   border-radius: 0.5rem;
   justify-content: flex-start;
 }

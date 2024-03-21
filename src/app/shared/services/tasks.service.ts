@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ITask } from '../interfaces/itask';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, filter, map, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
@@ -9,6 +9,12 @@ import { environment } from 'src/environments/environment';
 })
 export class TasksService {
   constructor(private http: HttpClient) {}
+
+  private filteredUsersSubject = new BehaviorSubject<string[]>(['all']);
+  filteredUsers$: Observable<string[]> =
+    this.filteredUsersSubject.asObservable();
+  private allTasksSubject = new Subject<ITask[]>();
+  allTasks$: Observable<ITask[]> = this.allTasksSubject.asObservable();
 
   addTask(
     title: string,
@@ -28,13 +34,14 @@ export class TasksService {
         title: title,
         deadline: deadline,
       };
-      console.log(task);
       this.http.post(environment.tasksBaseLink, task).subscribe();
     });
   }
 
   ediTask(task: ITask): void {
-    this.http.put<ITask>(environment.tasksBaseLink + task.id, task).subscribe();
+    this.http
+      .put<ITask>(environment.tasksBaseLink + '/' + task.id, task)
+      .subscribe();
   }
 
   getlastTaskId(): Observable<string> {
@@ -56,11 +63,23 @@ export class TasksService {
     return this.http.get<ITask[]>(environment.tasksBaseLink);
   }
 
-  getTaskById(taskId: string): Observable<ITask> {
-    return this.http.get<ITask>(environment.tasksBaseLink + taskId);
+  getTasksByUser(name: string) {
+    return this.http.get<ITask[]>(environment.tasksBaseLink + `?from=` + name);
   }
 
-  deleteTask(taskId: string): void {
-    this.http.delete<ITask>(environment.tasksBaseLink + taskId).subscribe();
+  updateFilteredUsers(newValues: string[]): void {
+    this.filteredUsersSubject.next(newValues);
+  }
+
+  upadteTasks(originalArray: ITask[], id?: string): void {
+    this.allTasksSubject.next;
+  }
+
+  getTaskById(taskId: string): Observable<ITask> {
+    return this.http.get<ITask>(environment.tasksBaseLink + '/' + taskId);
+  }
+
+  deleteTask(taskId: string): Observable<ITask> {
+    return this.http.delete<ITask>(environment.tasksBaseLink + '/' + taskId);
   }
 }

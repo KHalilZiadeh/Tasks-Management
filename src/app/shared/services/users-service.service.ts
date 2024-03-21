@@ -61,6 +61,6 @@ export class UsersService {
   }
 
   getUser(id: string): Observable<IUsers> {
-    return this.http.get<IUsers>(`${environment.usersBaseLink}${id}`);
+    return this.http.get<IUsers>(`${environment.usersBaseLink}/${id}`);
   }
 }

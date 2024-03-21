@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../../services/users-service.service';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { IUsers } from '../../interfaces/iusers';
+import { TasksService } from '../../services/tasks.service';
 
 @Component({
   selector: 'app-dropdown',
@@ -8,25 +8,35 @@ import { IUsers } from '../../interfaces/iusers';
   styleUrls: ['./dropdown.component.scss'],
 })
 export class DropdownComponent implements OnInit {
-  allUsers!: IUsers[];
   showDropdown: boolean = false;
-  filterArray: string[] = ['all'];
+  filterArray: string[] = [];
+  @Input() usersList!: string[]
+  @Input() showAll = false
+  @Input() id: number = 0
+  @Input() type: string = "checkbox"
+  userChoosen = new EventEmitter<string>();
 
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private tasksService: TasksService
+  ) { }
 
   ngOnInit(): void {
-    this.usersService.getAllUsers().subscribe((users) => {
-      this.allUsers = users;
-    });
+    if (this.showAll) {
+      this.filterArray.push('all')
+    }
   }
 
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
   }
 
-  updateFilter(event: any) {
-    console.log(event.currentTarget.id);
-    this.filterArray.push(event.currentTarget.id);
-    console.log(this.filterArray);
+  updateFilter(user: any) {
+    if (!this.filterArray.includes(user)) {
+      this.filterArray.push(user);
+    } else {
+      this.filterArray.splice(this.filterArray.indexOf(user), 1);
+    }
+    this.tasksService.updateFilteredUsers(this.filterArray);
+    this.userChoosen.emit(user);
   }
 }

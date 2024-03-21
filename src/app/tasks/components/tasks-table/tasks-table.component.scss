@@ -1,8 +1,8 @@
 table {
-  width: 100%;
+  width: calc(100% - 216px);
+  margin-left: 216px;
   border-collapse: collapse;
   height: 100%;
-  margin: 0;
 
   th,
   td {
