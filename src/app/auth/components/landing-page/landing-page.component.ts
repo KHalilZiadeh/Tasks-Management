@@ -10,5 +10,9 @@ import { UsersService } from 'src/app/shared/services/users-service.service';
 export class LandingPageComponent implements OnInit {
   constructor(private usersService: UsersService, private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if('kToken' in localStorage){
+      this.router.navigate(['/home'])
+    }
+  }
 }
