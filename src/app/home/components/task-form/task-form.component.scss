@@ -1,34 +1,56 @@
-form {
-  width: 400px;
-  height: 100%;
-
-  #box {
+div {
+  form {
+    width: 400px;
     height: 100%;
-    background-color: white;
 
-    #area {
-      height: 260px;
+    #box {
+      height: 100%;
+      background-color: white;
 
-      textarea {
-        height: 200px;
-        resize: none;
+      #area {
+        height: 260px;
+
+        textarea {
+          height: 200px;
+          resize: none;
+          border: 1px solid #dee2e6;
+        }
+      }
+
+
+      #sides {
+        height: 80px;
+
+        p {
+          margin: 0;
+        }
+      }
+
+      label+select,
+      label+input[type=date] {
+        height: 30px;
         border: 1px solid #dee2e6;
       }
     }
+  }
 
-
-    #sides {
-      height: 80px;
-
-      p {
-        margin: 0;
+  :host .rows {
+    ::ng-deep {
+      .mat-grid-tile-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
     }
-
-    label+select,
-    label+input[type=date] {
-      height: 30px;
-      border: 1px solid #dee2e6;
-    }
   }
+}
+
+
+#area-field {
+  textarea {
+    resize: none;
+    width: 100%;
+    height: 250px;
+  }
+
 }

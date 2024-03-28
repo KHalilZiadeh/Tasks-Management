@@ -9,4 +9,4 @@ import { HomeRoutingModule } from './home-routing.module';
   declarations: [HomeComponent, TaskFormComponent],
   imports: [CommonModule, SharedModule, HomeRoutingModule],
 })
-export class HomeModule {}
+export class HomeModule { }

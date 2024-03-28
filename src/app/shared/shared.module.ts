@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DeleteComponent } from './popups/delete/delete.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { DropdownDirective } from './directives/dropdown.directive';
+import { MaterialModule } from './components/material.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { DropdownDirective } from './directives/dropdown.directive';
     SharedRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    MaterialModule
   ],
   exports: [
     HeaderBarComponent,
@@ -34,6 +36,7 @@ import { DropdownDirective } from './directives/dropdown.directive';
     ReactiveFormsModule,
     DropdownComponent,
     FormsModule,
+    MaterialModule
   ],
 })
-export class SharedModule {}
+export class SharedModule { }

@@ -33,4 +33,4 @@ import { AuthGuard } from './shared/services/auth.guard';
   providers: [AuthGuard],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

@@ -20,6 +20,7 @@ export class TaskFormComponent implements OnInit {
   withOutMe!: string[];
   TODAY!: string;
   taskTitle!: string;
+  math = Math
 
   constructor(
     private tasks: TasksService,
