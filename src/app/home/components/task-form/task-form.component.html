@@ -1,5 +1,5 @@
 <div calss="w-100 h-100">
-  <form class="border border-light rounded p-3 bg-danger"
+  <form class="border border-light rounded p-3 bg-danger mb-3 w-50"
         [formGroup]="taskForm"
         (ngSubmit)="onSubmit()">
     <mat-grid-list cols="2"
@@ -85,7 +85,7 @@
                      [rowspan]="1"
                      class="button">
         <button type="submit"
-                mat-button
+                mat-raised-button
                 class="btn btn-success"
                 [disabled]="taskForm.invalid"
                 [matBadge]="updateNumberOfFields()"
@@ -96,20 +96,30 @@
       </mat-grid-tile>
     </mat-grid-list>
   </form>
-  <section>
-    <mat-checkbox labelPosition="before"
-                  [checked]="allCompleted"
-                  [indeterminate]="someCompleted()"
-                  (change)="setAll($event.checked)">
-      reset fields
-    </mat-checkbox>
-    <ul>
-      <li *ngFor="let checkbox of checkboxes">
-        <mat-checkbox [(ngModel)]="checkbox.checked"
-                      (ngModelChange)="updateAllComplete()">
-          {{checkbox.name}}
-        </mat-checkbox>
-      </li>
-    </ul>
+  <section class="w-50">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          select fields to re-fill after submition
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-checkbox labelPosition="before"
+                        [checked]="allCompleted"
+                        [indeterminate]="someCompleted()"
+                        (change)="setAll($event.checked)"
+                        class="ms-3">
+            re-fill all fields
+          </mat-checkbox>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <ul class="d-flex align-items-center justify-contetn-between">
+        <li *ngFor="let checkbox of checkboxes">
+          <mat-checkbox [(ngModel)]="checkbox.checked"
+                        (ngModelChange)="updateAllComplete()">
+            {{checkbox.name}}
+          </mat-checkbox>
+        </li>
+      </ul>
+    </mat-expansion-panel>
   </section>
 </div>

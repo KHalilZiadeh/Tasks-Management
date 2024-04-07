@@ -65,3 +65,12 @@ div {
   }
 
 }
+
+ul {
+  list-style: none;
+  padding-top: 1rem;
+
+  li:not(:first-child) {
+    margin-inline-start: 1rem;
+  }
+}
