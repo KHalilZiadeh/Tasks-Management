@@ -11,43 +11,51 @@ export class ToastService {
   userRegisterToast(success: boolean): void {
     success
       ? this.toastrService.success(
-          'You will be redirected to the login page',
-          'User added successfully',
-          {
-            timeOut: 700,
-            progressBar: true,
-            positionClass: 'toast-bottom-center',
-          }
-        )
+        'You will be redirected to the login page',
+        'User added successfully',
+        {
+          timeOut: 700,
+          progressBar: true,
+          positionClass: 'toast-bottom-center',
+        }
+      )
       : this.toastrService.error(
-          'Please select anothr username',
-          'Username already taken',
-          {
-            timeOut: 1500,
-            progressBar: true,
-            positionClass: 'toast-bottom-center',
-          }
-        );
+        'Please select anothr username',
+        'Username already taken',
+        {
+          timeOut: 1500,
+          progressBar: true,
+          positionClass: 'toast-bottom-center',
+        }
+      );
   }
 
   userLoginToast(status: boolean): void {
     status
       ? this.toastrService.success(
-          'You will be redirected to the home page',
-          'login successful',
-          {
-            timeOut: 700,
-            positionClass: 'toast-bottom-center',
-          }
-        )
+        'You will be redirected to the home page',
+        'login successful',
+        {
+          timeOut: 700,
+          positionClass: 'toast-bottom-center',
+        }
+      )
       : this.toastrService.error(
-          'Please check your username',
-          'Username does not exist',
-          {
-            timeOut: 1500,
-            progressBar: true,
-            positionClass: 'toast-bottom-center',
-          }
-        );
+        'Please check your username',
+        'Username does not exist',
+        {
+          timeOut: 1500,
+          progressBar: true,
+          positionClass: 'toast-bottom-center',
+        }
+      );
+  }
+
+  toastAToast(msgTitle: string, msg: string) {
+    this.toastrService.success(msgTitle, msg, {
+      timeOut: 1500,
+      progressBar: true,
+      positionClass: 'toast-bottom-center'
+    })
   }
 }

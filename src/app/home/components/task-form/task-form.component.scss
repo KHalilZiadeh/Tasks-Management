@@ -1,4 +1,8 @@
 div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
   form {
     width: 600px;
     height: 100%;
@@ -73,4 +77,13 @@ ul {
   li:not(:first-child) {
     margin-inline-start: 1rem;
   }
+}
+
+#expansion {
+  height: 136px;
+}
+
+mat-card {
+  height: fit-content;
+  width: 45%;
 }
