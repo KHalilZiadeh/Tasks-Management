@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -6,7 +6,12 @@ import {
 } from '@angular/forms';
 import { TasksService } from '../../../shared/services/tasks.service';
 import { UsersService } from '../../../shared/services/users-service.service';
+import { FormGroupDirective } from '@angular/forms';
 
+interface checkbox {
+  name: string;
+  checked: boolean;
+}
 
 @Component({
   selector: 'app-task-form',
@@ -21,6 +26,19 @@ export class TaskFormComponent implements OnInit {
   TODAY!: string;
   taskTitle!: string;
   math = Math
+  testValu: number = 1
+  checkboxes: checkbox[] = []
+  allCompleted: boolean = false
+  baseInitVal: any = {
+    title: '',
+    taskTxt: '',
+    assignee: '',
+    deadline: '',
+    priority: 1
+  }
+
+  @ViewChild(FormGroupDirective) private form!: FormGroupDirective
+  formInitVAl: any = {}
 
   constructor(
     private tasks: TasksService,
@@ -31,17 +49,18 @@ export class TaskFormComponent implements OnInit {
       title: [''],
       taskTxt: ['', Validators.required],
       assignee: ['', Validators.required],
-      deadline: [''],
+      deadline: [this.TODAY],
+      priority: [1]
     });
   }
 
   ngOnInit(): void {
     this.me = JSON.parse(localStorage.getItem('taskUser')!).authUser;
     this.users.getAllUsers().subscribe((usrs: any) => {
-      this.withOutMe = usrs.map((user: any) => {
-        if (user.username !== this.me) {
-          return user.username
-        }
+      this.withOutMe = usrs.filter((user: any) => {
+        return user.username !== this.me
+      }).map((user: any) => {
+        return user.username
       });
     });
     let time = new Date();
@@ -52,7 +71,12 @@ export class TaskFormComponent implements OnInit {
     day = day.length == 1 ? '0' + day : day;
 
     this.TODAY = year + '-' + month + '-' + day;
+    this.baseInitVal.deadline = this.TODAY
     this.taskForm.controls['deadline'].setValue(this.TODAY);
+    this.checkboxes = Object.keys(this.taskForm.controls).map(control => {
+      return { name: control, checked: false }
+    })
+
   }
 
   onSubmit() {
@@ -60,18 +84,58 @@ export class TaskFormComponent implements OnInit {
     let taskTxt = this.taskForm.controls['taskTxt'].value!;
     let assignee = this.taskForm.controls['assignee'].value!;
     let deadline = this.taskForm.controls['deadline'].value!;
+    let priority = this.taskForm.controls['priority'].value!;
+    this.tasks.addTask(title, taskTxt, this.me, assignee, deadline, priority);
 
-    this.tasks.addTask(title, taskTxt, this.me, assignee, deadline);
-    title = this.taskForm.controls['title'].setValue('');
-    taskTxt = this.taskForm.controls['taskTxt'].setValue('');
-    assignee = this.taskForm.controls['assignee'].setValue('');
+    this.setInitalValues()
+    this.form.resetForm(this.formInitVAl)
   }
 
-  checkValue() {
-    console.log(this.taskForm.controls['assignee']);
-  }
+
 
   updateAssignee(event: any) {
     this.taskForm.controls['assignee'].setValue(event);
+  }
+
+  updateNumberOfFields() {
+    let numberOfFields: number = 0
+    let controls = this.taskForm.controls
+    for (const control in controls) {
+      if (controls[control].value !== '') numberOfFields++
+    }
+    return numberOfFields
+  }
+
+  someCompleted(): boolean {
+    return this.checkboxes.filter(checkbox => checkbox.checked).length > 0 && !this.allCompleted
+  }
+
+  updateAllComplete() {
+    this.allCompleted = this.checkboxes !== null && this.checkboxes.every(checkbox => checkbox.checked)
+  }
+
+  setAll(completed: boolean) {
+    this.allCompleted = completed
+    this.checkboxes.forEach(checkbox => checkbox.checked = completed)
+  }
+
+  setInitalValues(): void {
+    for (let key of this.checkboxes) {
+      if (key.checked) { this.formInitVAl[key.name] = this.taskForm.controls[key.name].value }
+      else {
+        console.log(this.baseInitVal[key.name])
+        { this.formInitVAl[key.name] = this.baseInitVal[key.name] }
+      }
+    }
+  }
+
+  reFillForm() {
+    if (this.allCompleted) {
+      this.formInitVAl = this.form.value
+    } else if (this.someCompleted()) {
+      this.setInitalValues()
+    } else {
+      this.formInitVAl = this.baseInitVal
+    }
   }
 }

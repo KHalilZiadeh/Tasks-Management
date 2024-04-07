@@ -6,4 +6,5 @@ export interface ITask {
   status: string;
   title: string;
   deadline: string;
+  priority: number
 }
