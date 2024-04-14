@@ -21,25 +21,28 @@ export class TasksTableComponent implements OnInit {
   mode!: string;
   newTitle!: string;
   newTxt!: string;
+  tasksLength!: number;
+  pageLength: number = 5;
+  pageIndex: number = 1;
 
   constructor(
     private tasksService: TasksService,
     private popupService: PopupService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('taskUser')!).authUser;
-    this.tasksService.getAllTasks().subscribe((reTasks) => {
-      this.allTasks = reTasks;
-      this.tasksToShow = this.allTasks;
+    this.tasksService.getTasksbypage(this.pageIndex, this.pageLength).subscribe(reTasks => {
+      this.tasksToShow = reTasks.data;
+      this.tasksLength = reTasks.items;
     });
+
     this.tasksService.filteredUsers$.subscribe((newValeus) => {
       this.tasksToShow = this.showFiltered(newValeus);
     });
   }
 
-  ngOnChanges(changes: any): void {}
 
   filterTasks(user: string, tasks: ITask[], column: string): ITask[] {
     let filtered: ITask[] = tasks.filter((task) => {
@@ -60,21 +63,21 @@ export class TasksTableComponent implements OnInit {
   selectFrom(): void {
     this.column = 'from';
     this.tasksToShow = this.filterTasks(this.user, this.allTasks, this.column);
-  }
+  };
 
   selectTo(): void {
     this.column = 'to';
     this.tasksToShow = this.filterTasks(this.user, this.allTasks, this.column);
-  }
+  };
 
   selectBoth(): void {
     this.column = 'both';
     this.tasksToShow = this.filterTasks(this.user, this.allTasks, this.column);
-  }
+  };
 
   viewAll(): void {
     this.tasksToShow = this.allTasks;
-  }
+  };
 
   markAsDone(event: any): void {
     let taskId: string = event.target.parentElement.id.split('-')[1];
@@ -88,7 +91,7 @@ export class TasksTableComponent implements OnInit {
         if (task.id === taskId) task.status = 'done';
       });
     });
-  }
+  };
 
   deleteTask(event: any) {
     if (this.mode != 'edit') {
@@ -183,6 +186,19 @@ export class TasksTableComponent implements OnInit {
       this.tasksToShow = this.tasksToShow.filter(
         (tsk: ITask) => task.id !== tsk.id
       );
+    });
+  };
+
+  pagelen(pagelen: any): void {
+    this.pageLength = pagelen.pageSize;
+
+  };
+  getPagedTasks(pageEvent: any): void {
+    console.log(pageEvent);
+    pageEvent.pageSize == this.pageLength ? this.pageIndex++ : this.pageIndex = 1;
+    this.tasksService.getTasksbypage(this.pageIndex, pageEvent.pageSize).subscribe((retTasks) => {
+      console.log(retTasks.data);
+      this.tasksToShow = retTasks.data;
     });
   }
 }

@@ -89,30 +89,40 @@ ul {
 #cards-container {
   max-height: 744px;
   grid-area: c;
-  overflow: auto;
 
-  &::-webkit-scrollbar {
-    display: none;
+  mat-paginator {
+    z-index: 1000;
   }
 
-  mat-card {
-    height: fit-content;
-    width: 45%;
 
-    ::ng-deep {
-      mat-card-subtitle {
-        display: flex;
-        flex-direction: column;
-        align-items: start;
-        justify-content: space-evenly;
+  div {
+    width: 100%;
+    max-height: 680px;
+    overflow-y: auto;
 
-        span,
-        span span {
-          width: 100%;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+
+    mat-card {
+      height: fit-content;
+
+      ::ng-deep {
+        mat-card-subtitle {
           display: flex;
-          align-items: center;
-          justify-content: space-between;
+          flex-direction: column;
+          align-items: start;
+          justify-content: space-evenly;
 
+          span,
+          span span {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+          }
         }
       }
     }

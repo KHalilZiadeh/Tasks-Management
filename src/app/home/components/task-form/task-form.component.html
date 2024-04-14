@@ -127,27 +127,31 @@
     </mat-expansion-panel>
   </section>
   <section id="cards-container">
-    <mat-card class="me-3 mb-2 float-start fst-italic"
-              *ngFor="let task of randomTasks">
-      <mat-card-title [ngClass]="task.title == '' ? 'text-secondary' :''">
-        {{task.title !== ''? task.title:'No Title'}}</mat-card-title>
-      <mat-card-subtitle>
-        <span>
-          From: {{task.from}}
-        </span>
-        <span>
-          to: {{task.to}}
-        </span>
-        <span>
-          <span>Deadline:</span>
-          <span>{{task.deadline}}</span>
-        </span>
-      </mat-card-subtitle>
-      <mat-card-content>
-        <p class="mb-3">{{task.taskTxt}}</p>
-        <hr class="mt-1 mb-2">
-        <p>{{task.priority}}</p>
-      </mat-card-content>
-    </mat-card>
+    <div class="me-3 mb-2 d-flex flex-wrap align-items-center  fst-italic">
+      <mat-card *ngFor="let task of randomTasks">
+        <mat-card-title [ngClass]="task.title == '' ? 'text-secondary' :''">
+          {{task.title !== ''? task.title:'No Title'}}</mat-card-title>
+        <mat-card-subtitle>
+          <span>
+            From: {{task.from}}
+          </span>
+          <span>
+            to: {{task.to}}
+          </span>
+          <span>
+            <span>Deadline:</span>
+            <span>{{task.deadline}}</span>
+          </span>
+        </mat-card-subtitle>
+        <mat-card-content>
+          <p class="mb-3">{{task.taskTxt}}</p>
+          <hr class="mt-1 mb-2">
+          <p>{{task.priority}}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <mat-paginator [length]="tasksNumber"
+                   pageSize="10"
+                   [pageSizeOptions]="[5,10,25,50,100]"></mat-paginator>
   </section>
 </div>

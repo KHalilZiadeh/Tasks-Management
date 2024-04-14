@@ -45,6 +45,8 @@ export class TaskFormComponent implements OnInit {
   @ViewChild(FormGroupDirective) private form!: FormGroupDirective;
   formInitVAl: any = {};
   numberOfSelects: number = 0;
+  tasksNumber!: number;
+  pageLength: number = 10;
 
   constructor(
     private tasks: TasksService,
@@ -84,7 +86,8 @@ export class TaskFormComponent implements OnInit {
     this.checkboxes = Object.keys(this.taskForm.controls).map(control => {
       return { name: control, checked: false };
     });
-    this.getRandomTasks(8);
+    this.getRandomTasks(18);
+    this.getTasksCount();
   }
 
   getMonth(mon: string): string {
@@ -149,11 +152,11 @@ export class TaskFormComponent implements OnInit {
         priority: priority
       }
     });
-
+    eleRef.afterDismissed().subscribe(tesk => {
+      this.getRandomTasks(15);
+    });
     this.setInitalValues();
     this.form.resetForm(this.formInitVAl);
-
-    // this.openSnackBar('test', 'close');
   }
 
   openSnackBar(msg: string, action: string) {
@@ -215,21 +218,24 @@ export class TaskFormComponent implements OnInit {
   }
 
   getRandomTasks(numberOftasks: number): void {
+    this.randomTasks = [];
     for (let i = 0; i < numberOftasks; i++) {
       let randomNumber = Math.floor(Math.random() * 50).toString();
       this.tasks.getTaskById(randomNumber).subscribe(task => {
         this.randomTasks.push(task);
-      }, error => {
-        randomNumber += 1;
-        this.tasks.getTaskById(randomNumber);
       });
     }
   }
 
   extractDate(deadline: string): string {
     let date!: string;
-
     date = deadline.split(" ")[3] + '-' + this.getMonth(deadline.split(" ")[1]) + '-' + deadline.split(" ")[2];
     return date;
+  }
+
+  getTasksCount() {
+    this.tasks.getAllTasks().subscribe(tasks => {
+      this.tasksNumber = tasks.length;
+    });
   }
 }

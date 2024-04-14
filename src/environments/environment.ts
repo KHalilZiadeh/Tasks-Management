@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  usersBaseLink: 'http://localhost:4444/users',
-  tasksBaseLink: 'http://localhost:4444/tasks',
+  usersBaseLink: 'http://localhost:4444/users/',
+  tasksBaseLink: 'http://localhost:4444/tasks/'
 };
 
 /*

@@ -74,4 +74,15 @@
       </td>
     </tr>
   </tbody>
+  <tfoot>
+    <tr>
+      <th scope="row"
+          colspan="6">
+        <mat-paginator [length]="tasksLength"
+                       [pageSize]="pageLength"
+                       (page)="getPagedTasks($event)"
+                       [pageSizeOptions]="[5,10,50]"></mat-paginator>
+      </th>
+    </tr>
+  </tfoot>
 </table>

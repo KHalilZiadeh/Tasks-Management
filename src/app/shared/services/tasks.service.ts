@@ -65,6 +65,10 @@ export class TasksService {
     return this.http.get<ITask[]>(environment.tasksBaseLink);
   }
 
+  getTasksbypage(pageIndex: number, pagelength: number) {
+    return this.http.get<any>(environment.tasksBaseLink + `?_page=${pageIndex}&_per_page=${pagelength}`);
+  }
+
   getTasksByUser(name: string) {
     return this.http.get<ITask[]>(environment.tasksBaseLink + `?from=` + name);
   }
