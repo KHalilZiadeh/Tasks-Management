@@ -1,11 +1,13 @@
 div {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-areas: 'f c' 'f c' 'f c' 'f c' 'e c';
   gap: 1rem;
 
   form {
     width: 600px;
     height: 100%;
+    grid-area: f;
 
     #box {
       height: 100%;
@@ -81,9 +83,38 @@ ul {
 
 #expansion {
   height: 136px;
+  grid-area: e;
 }
 
-mat-card {
-  height: fit-content;
-  width: 45%;
+#cards-container {
+  max-height: 744px;
+  grid-area: c;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  mat-card {
+    height: fit-content;
+    width: 45%;
+
+    ::ng-deep {
+      mat-card-subtitle {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: space-evenly;
+
+        span,
+        span span {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+        }
+      }
+    }
+  }
 }

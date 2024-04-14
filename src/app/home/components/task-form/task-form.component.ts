@@ -9,6 +9,8 @@ import { UsersService } from '../../../shared/services/users-service.service';
 import { FormGroupDirective } from '@angular/forms';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { ITask } from 'src/app/shared/interfaces/itask';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TaskCardComponent } from 'src/app/shared/components/task-card/task-card.component';
 
 interface checkbox {
   name: string;
@@ -49,6 +51,7 @@ export class TaskFormComponent implements OnInit {
     private formB: FormBuilder,
     private users: UsersService,
     private toast: ToastService,
+    private _snackBar: MatSnackBar
   ) {
     this.taskForm = formB.group({
       title: [''],
@@ -81,22 +84,81 @@ export class TaskFormComponent implements OnInit {
     this.checkboxes = Object.keys(this.taskForm.controls).map(control => {
       return { name: control, checked: false };
     });
-    this.getRandomTasks(4);
+    this.getRandomTasks(8);
+  }
+
+  getMonth(mon: string): string {
+    switch (mon) {
+      case 'Jan':
+        mon = '01';
+        break;
+      case 'Feb':
+        mon = '02';
+        break;
+      case 'Mar':
+        mon = '03';
+        break;
+      case 'Apr':
+        mon = '04';
+        break;
+      case 'May':
+        mon = '05';
+        break;
+      case 'Jun':
+        mon = '06';
+        break;
+      case 'Jul':
+        mon = '07';
+        break;
+      case 'Aug':
+        mon = '08';
+        break;
+      case 'Sep':
+        mon = '09';
+        break;
+      case 'Oct':
+        mon = '10';
+        break;
+      case 'Nov':
+        mon = '11';
+        break;
+      case 'Dec':
+        mon = '12';
+        break;
+    }
+    return mon;
   }
 
   onSubmit() {
-    let title = this.taskForm.controls['title'].value!;
-    let taskTxt = this.taskForm.controls['taskTxt'].value!;
-    let assignee = this.taskForm.controls['assignee'].value!;
-    let deadline = this.taskForm.controls['deadline'].value!;
-    let priority = this.taskForm.controls['priority'].value!;
+    let title: string = this.taskForm.controls['title'].value!;
+    let taskTxt: string = this.taskForm.controls['taskTxt'].value!;
+    let assignee: string = this.taskForm.controls['assignee'].value!;
+    let deadline: string = this.taskForm.controls['deadline'].value!;
+    deadline = this.extractDate(deadline.toString());
+
+    let priority: number = this.taskForm.controls['priority'].value!;
     this.tasks.addTask(title, taskTxt, this.me, assignee, deadline, priority);
+    let eleRef = this._snackBar.openFromComponent(TaskCardComponent, {
+      duration: 2000,
+      data: {
+        title: title,
+        taskTxt: taskTxt,
+        from: this.me,
+        to: assignee,
+        deadline: deadline,
+        priority: priority
+      }
+    });
 
     this.setInitalValues();
     this.form.resetForm(this.formInitVAl);
+
+    // this.openSnackBar('test', 'close');
   }
 
-
+  openSnackBar(msg: string, action: string) {
+    this._snackBar.open(msg, action);
+  }
 
   updateAssignee(event: any) {
     this.taskForm.controls['assignee'].setValue(event);
@@ -129,7 +191,6 @@ export class TaskFormComponent implements OnInit {
     for (let key of this.checkboxes) {
       if (key.checked) { this.formInitVAl[key.name] = this.taskForm.controls[key.name].value; }
       else {
-        console.log(this.baseInitVal[key.name]);
         { this.formInitVAl[key.name] = this.baseInitVal[key.name]; }
       }
     }
@@ -163,6 +224,12 @@ export class TaskFormComponent implements OnInit {
         this.tasks.getTaskById(randomNumber);
       });
     }
-    console.log(this.randomTasks);
+  }
+
+  extractDate(deadline: string): string {
+    let date!: string;
+
+    date = deadline.split(" ")[3] + '-' + this.getMonth(deadline.split(" ")[1]) + '-' + deadline.split(" ")[2];
+    return date;
   }
 }

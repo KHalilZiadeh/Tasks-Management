@@ -1,5 +1,5 @@
 <div calss="w-100 h-100">
-  <form class="border border-light rounded p-3 bg-danger mb-3 w-100"
+  <form class="border border-light rounded p-3 mb-3 w-100"
         [formGroup]="taskForm"
         (ngSubmit)="onSubmit()">
     <mat-grid-list cols="2"
@@ -96,29 +96,6 @@
       </mat-grid-tile>
     </mat-grid-list>
   </form>
-  <section class="bg-warning">
-    <mat-card class="me-3 mb-2 float-start fst-italic"
-              *ngFor="let task of randomTasks">
-      <mat-card-title [ngClass]="task.title == '' ? 'text-secondary' :''">
-        {{task.title !== ''? task.title:'No Title'}}</mat-card-title>
-      <mat-card-subtitle>
-        <span>
-          From: {{task.from}}
-        </span>
-        <span>
-          to: {{task.to}}
-        </span>
-        <span>
-          {{task.deadline}}
-        </span>
-      </mat-card-subtitle>
-      <mat-card-content>
-        <p class="mb-3">{{task.taskTxt}}</p>
-        <hr class="mt-1 mb-2">
-        <p>{{task.priority}}</p>
-      </mat-card-content>
-    </mat-card>
-  </section>
   <section id="expansion"
            [matBadge]="numberOfSelects"
            matBadgeOverlap="true">
@@ -148,5 +125,29 @@
         </li>
       </ul>
     </mat-expansion-panel>
+  </section>
+  <section id="cards-container">
+    <mat-card class="me-3 mb-2 float-start fst-italic"
+              *ngFor="let task of randomTasks">
+      <mat-card-title [ngClass]="task.title == '' ? 'text-secondary' :''">
+        {{task.title !== ''? task.title:'No Title'}}</mat-card-title>
+      <mat-card-subtitle>
+        <span>
+          From: {{task.from}}
+        </span>
+        <span>
+          to: {{task.to}}
+        </span>
+        <span>
+          <span>Deadline:</span>
+          <span>{{task.deadline}}</span>
+        </span>
+      </mat-card-subtitle>
+      <mat-card-content>
+        <p class="mb-3">{{task.taskTxt}}</p>
+        <hr class="mt-1 mb-2">
+        <p>{{task.priority}}</p>
+      </mat-card-content>
+    </mat-card>
   </section>
 </div>

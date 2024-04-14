@@ -1,0 +1,13 @@
+<mat-card>
+  <mat-card-title>
+    {{ data.title || title || 'No Title' }}
+  </mat-card-title>
+  <mat-card-subtitle>
+    <span>From: {{ data.from || from }}</span>
+    <span>To: {{ data.to || to }}</span>
+    <span>Deadline: <span>{{ data.deadline || deadline }}</span></span>
+  </mat-card-subtitle>
+  {{ data.taskTxt || taskTxt}}
+  <hr class="mt-1 mb-2">
+  <p>priority: {{ data.priority || priority}}</p>
+</mat-card>

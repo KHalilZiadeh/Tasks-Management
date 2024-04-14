@@ -10,6 +10,8 @@ import { DeleteComponent } from './popups/delete/delete.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { DropdownDirective } from './directives/dropdown.directive';
 import { MaterialModule } from './components/material.module';
+import { TaskCardComponent } from './components/task-card/task-card.component';
+
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { MaterialModule } from './components/material.module';
     DeleteComponent,
     DropdownComponent,
     DropdownDirective,
+    TaskCardComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +39,8 @@ import { MaterialModule } from './components/material.module';
     ReactiveFormsModule,
     DropdownComponent,
     FormsModule,
-    MaterialModule
+    MaterialModule,
+    TaskCardComponent
   ],
 })
 export class SharedModule { }
